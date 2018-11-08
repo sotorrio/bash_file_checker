@@ -24,6 +24,7 @@ actualizar_archivos()
     echo "Hecho" >> /dev/tty
 }
 
+
 introduce_directorio()
 {
     # Esta función se usará para introducir el directorio de trabajo cuando se vaya a actualizar la lista
@@ -39,10 +40,34 @@ introduce_directorio()
     echo $dir
 }
 
+
+comprobar_archivos()
+{
+    IFS=$'\n'
+    set -f
+
+    for linea in $(cat < "./archivos"); do
+        #echo "$linea" >> /dev/tty
+        IFS=$" " read -r -a arch <<< "$linea"
+        echo "${arch[0]}" >> /dev/tty
+        if [ -f "${arch[0]}" ] ; then
+            if [ "$(wc -c <"${arch[0]}")" -eq "${arch[1]}" ] ; then
+                echo "GUAY" >> /dev/tty
+            fi
+        fi
+
+        IFS=$'\n'
+    done < ./archivos
+}
+
+
 ayuda()
 {
     # La función de ayuda se ejecuta al pasar el parámetro -h al script
     echo "AYUDA DE file_check.sh" >> /dev/tty
+    echo "" >> /dev/tty
+    echo "Sin parámetros realiza la comprobación" >> /dev/tty
+    echo "" >> /dev/tty
     echo "-a        Actualizar directorios" >> /dev/tty
     echo "-h        Ayuda de file_checker" >> /dev/tty
 }
@@ -59,6 +84,9 @@ if [ $# -ge 1 ] ; then
     else
         echo "Parámetro no válido '$1'" >> /dev/tty
     fi
+else
+    directorio=$(introduce_directorio)
+    $(comprobar_archivos)
 fi
 
 #### Fin de la función principal
