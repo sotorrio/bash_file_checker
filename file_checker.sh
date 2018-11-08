@@ -28,6 +28,8 @@ introduce_directorio()
 {
     # Esta función se usará para introducir el directorio de trabajo cuando se vaya a actualizar la lista
     # de ficheros y cuando se vaya a realizar las comprobaciones
+
+    # Si no se introduce ningún directorio, se toma el directorio por defecto en el script
     default=~/prueba
     echo "Directorio en el que se va a trabajar (ENTER para $default):" >>/dev/tty
     read dir
@@ -47,8 +49,6 @@ ayuda()
 
 
 #### Función principal
-
-# Si no se introduce ningún directorio, se toma el directorio por defecto en el script
 
 if [ $# -ge 1 ] ; then
     if [ $1 = "-a" ] ; then
