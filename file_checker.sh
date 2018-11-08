@@ -50,11 +50,15 @@ ayuda()
 
 # Si no se introduce ningún directorio, se toma el directorio por defecto en el script
 
-if [ $1 = "-a" ] ; then
-    directorio=$(introduce_directorio)
-    $(actualizar_archivos)
-elif [ $1 = "-h" ] ;  then
-    $(ayuda)
+if [ $# -ge 1 ] ; then
+    if [ $1 = "-a" ] ; then
+        directorio=$(introduce_directorio)
+        $(actualizar_archivos)
+    elif [ $1 = "-h" ] ;  then
+        $(ayuda)
+    else
+        echo "Parámetro no válido '$1'" >> /dev/tty
+    fi
 fi
 
 #### Fin de la función principal
