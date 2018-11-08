@@ -44,7 +44,6 @@ ayuda()
     echo "-a        Actualizar directorios" >> /dev/tty
     echo "-h        Ayuda de file_checker" >> /dev/tty
 }
-}
 
 
 #### Función principal
