@@ -42,6 +42,8 @@ ayuda()
     # La función de ayuda se ejecuta al pasar el parámetro -h al script
     echo "AYUDA DE file_check.sh" >> /dev/tty
     echo "-a        Actualizar directorios" >> /dev/tty
+    echo "-h        Ayuda de file_checker" >> /dev/tty
+}
 }
 
 
