@@ -46,14 +46,28 @@ comprobar_archivos()
     IFS=$'\n'
     set -f
 
+    # Se reconstruye la lista de resultados
+    if [ -f ./resultados ] ; then
+        rm ./resultados
+    fi
+    touch ./resultados
+
     for linea in $(cat < "./archivos"); do
-        #echo "$linea" >> /dev/tty
+    # Recorremos cada línea del fichero de archivos
         IFS=$" " read -r -a arch <<< "$linea"
-        echo "${arch[0]}" >> /dev/tty
         if [ -f "${arch[0]}" ] ; then
+        # Compruebo si el archivo actual existe
             if [ "$(wc -c <"${arch[0]}")" -eq "${arch[1]}" ] ; then
-                echo "GUAY" >> /dev/tty
+                # Compruebo el tamaño del archivo actual
+                echo "${arch[0]} ..... OK" >> /dev/tty
+                echo "${arch[0]} ..... OK" >> ./resultados
+            else
+                echo "${arch[0]} ..... FAIL (tamaño)" >> /dev/tty
+                echo "${arch[0]} ..... FAIL (tamaño)" >> ./resultados
             fi
+        else
+            echo "${arch[0]} ..... FAIL (no existe)" >> /dev/tty
+            echo "${arch[0]} ..... FAIL (no existe)" >> ./resultados
         fi
 
         IFS=$'\n'
